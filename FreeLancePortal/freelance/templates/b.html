@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block intro_title %}{{b_thing.intro}}{% endblock intro_title %}
+{% block intro_subtitle %}{{b_thing.description}}{% endblock intro_subtitle %}
+
+{% block btns %}
+    <a href="{% url 'index' %}" class="btn top-three-three">На главную</a>
+{% endblock btns %}

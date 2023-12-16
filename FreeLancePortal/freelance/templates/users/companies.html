@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block intro_title %}Компании сотрудники{% endblock intro_title %}
+{% block intro_subtitle %}Список компаний которые могут иметь работников у нас{% endblock intro_subtitle %}
+
+{% block btns %}
+    <a href="{% url 'index' %}" class="btn top-three-three">На главную</a>
+{% endblock btns %}
+
+{% block main_inner %}
+
+<div class="container">
+    <div class="main__inner">
+        <div class="main__suptitle">Компании</div>
+        
+        {% for company in companies %}
+            <div class="task_list__card">
+                <div class="task_list__card_title"><a href="">{{company.nameing}}</a></div>
+                <div class="task_list__card_description">{{company.description}}</div>
+                <a href="{% url 'send_res_to_company' company.pk %}" class="task_btn">Подать заявку</a> 
+            </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock main_inner %}

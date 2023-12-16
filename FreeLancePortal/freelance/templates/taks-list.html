@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block intro_title %}Заказы на бирже{% endblock intro_title %}
+{% block intro_subtitle %}Заказы по вашему запросу{% endblock intro_subtitle %}
+
+{% block btns %}
+    <a href="{% url 'profile' user.username %}" class="btn top-three-three">Ваш профиль</a>
+    <a href="{% url 'profile' user.username %}" class="btn top-three-three">Фильтрация</a>
+{% endblock btns %}
+
+{% block main_inner %}
+<div class="container">
+    <div class="main__inner">
+        <div class="main__suptitle">Заказы</div>
+        <div class="task_list">
+
+            {% for task in tasks %}
+            <div class="task_list__card">
+                <div class="task_list__card_title"><a href="{% url 'detail' task.pk %}">{{task.intro}}</a></div>
+                <div class="task_list__card_description">{{task.description|truncatechars:70|safe}}</div>
+                {% if task.user != user %}
+                    {% if user.my_profile.free_lancer_status == True and task.freelancer == None %}
+                    <a href="{% url 'give_response' task.pk %}" class="task_btn">Откликнуться</a> <span> | </span>{% endif %}
+                    {% if task.freelancer == user or task.user == user %}<a href="{% url 'send_report' task.pk %}" class="task_btn">Отправить репорт</a>{% endif %}
+                {% else %}
+                <a href="{% url 'like_to' task.pk %}" class="task_btn">Отметить / Завершить</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

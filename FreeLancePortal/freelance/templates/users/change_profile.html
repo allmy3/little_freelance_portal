@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block intro_title %}Изменение профиля @{{profile.owner_user.username}}{% endblock intro_title %}
+{% block intro_subtitle %}Тут вы можете поменять роль на исполнителя{% endblock intro_subtitle %}
+
+{% block btns %}
+    
+    <form method="post">{% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn top-three-three bcgr">Сохранить изменения</button>
+    </form>
+
+{% endblock btns %}

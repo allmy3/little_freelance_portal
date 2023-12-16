@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block intro_title %}Отзыв к профилю пользователя @{{profile.owner_user.username}}{% endblock intro_title %}
+{% block intro_subtitle %}Ваш отзыв повлияет на рейтинг пользователя{% endblock intro_subtitle %}
+
+{% block btns %}
+    
+    <form method="post">{% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn top-three-three bcgr">Оставить</button>
+    </form>
+
+{% endblock btns %}

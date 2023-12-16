@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block intro_subtitle %}Новый заказ{% endblock intro_subtitle %}
+
+{% block btns %}
+
+<form method="POST">{% csrf_token %}
+    {% for field in form %}
+        {{field}} <br>
+    {% endfor %}
+    {{form.media}}
+    <button type="submit" class="btn top-three-three bcgr">Создать</button>
+</form>
+
+{% endblock btns %}

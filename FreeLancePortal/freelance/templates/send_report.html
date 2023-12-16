@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block intro_title %}Отправление репорта{% endblock intro_title %}
+{% block intro_subtitle %}сообщите о мошенничестве связанным с заказом "{{task.intro}}"{% endblock intro_subtitle %}
+
+{% block btns %}
+
+    <form method="post">{% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn top-three-three bcgr">Отправить</button>
+    </form>
+
+{% endblock btns %}

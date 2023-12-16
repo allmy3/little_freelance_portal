@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Главная - FreeLance.ru</title>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <div class="header__inner">
+                <div class="header__logo"><a href="{% url 'index' %}">Free<span>Lance</span></a></div>
+
+                <nav class="nav">
+                    <a class="nav__link" href="{% url 'task_list' %}">Все заказы</a>
+                    {% if user.is_authenticated %}
+                    {% if user.my_profile.free_lancer_status == False %}<a class="nav__link" href="{% url 'all_res' %}">Отклики</a>{% endif %}
+                    <a class="nav__link" href="{% url 'companies' %}">Компании</a>
+                    <a class="nav__link" href="{% url 'profile' request.user.username %}">Профиль</a>
+                    <a class="nav__link" href="{% url 'logout' %}">Выход</a>
+                    {% else %}
+                    <a class="nav__link" href="{% url 'login' %}">Вход</a>
+                    <a class="nav__link" href="{% url 'register' %}">Регистрация</a>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <div class="intro">
+        <div class="container">
+            <div class="intro__inner">
+                <h1 class="intro__title">{% block intro_title %}{% endblock intro_title %}</h1>
+                <h2 class="intro__subtitle">{% block intro_subtitle %}{% endblock intro_subtitle %}</h2>
+                {% block btns %}{% endblock btns %}
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+        {% block main_inner %}{% endblock main_inner %}
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block intro_title %}Новая Фриланс Биржа{% endblock intro_title %}
+{% block intro_subtitle %}Получайте и давайте работу без рисков и вложений{% endblock intro_subtitle %}
+
+{% block btns %}
+    {% if user.is_authenticated %}
+        {% if user.my_profile.free_lancer_status == True %}
+            <a href="{% url 'change_profile' %}" class="btn top-three-three">Стать заказчиком</a>
+        {% else %}
+            <a href="{% url 'new_task' %}" class="btn top-three-three">Разместить заказ</a>
+            <a href="{% url 'change_profile' %}" class="btn top-three-three">Стать фрилансером</a>
+        {% endif %}
+    {% else %}
+    {% endif %}
+{% endblock btns %}
+
+{% block main_inner %}
+
+<div class="container">
+    <div class="main__inner">
+        <div class="poster">
+            {% for thing in newest_board_thing %}
+            <div class="poster__title"><p>{{thing.intro}}</p></div>
+            <div class="poster__link"><a href="{% url 'board_detail' thing.pk %}">Подробнее &rarr;</a></div>
+            {% endfor %}
+        </div>
+
+        <div class="main__suptitle">Плюсы именно данной биржи</div>
+        <div class="main__title">
+            1) Удобная система заказов, удобное общение заказчика с исполнителем; <br>
+            2) Легкость использования сайта; <br>
+            3) Понятность интерфейса сайта даже для не опытных пользователей; <br>
+            4) Высокая безопасность благодаря нашей системе доверия; <br>
+            5) Частые улучшения сайта и его качества;
+        </div>
+    </div>
+</div>
+
+{% endblock main_inner %}

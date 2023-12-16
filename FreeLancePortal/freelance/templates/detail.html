@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block intro_title %}Детальный заказ{% endblock intro_title %}
+{% block intro_subtitle %}Вся информация{% endblock intro_subtitle %}
+
+{% block btns %}
+    <div class="task_info">
+        <div class="task_author"><p>{% if task.user %}@{{task.user.username}}{% else %}{{task.company.nameing}}{% endif %}</p></div>
+        <div class="task_date"><p>{{task.created}}</p></div>
+        <div class="task-response-count"><p>Отклики: {{task.responsible_people_count}}</p></div>
+        {% if task.user == user %}<a href="{% url 'like_to' task.pk %}" class="btn top-three-three">Дать отметку</a>{% endif %}
+    </div>
+{% endblock btns %}
+
+{% block main_inner %}
+
+    <div class="container">
+            <div class="main__inner">
+                <div class="task__main_info">
+                    <div class="task_title"><p> <span>Оглавление:</span> {{task.intro}}</p></div>
+                    {% if task.freelancer != None %}<div class="task_title"><p> <span>Исполнитель:</span> @{{task.freelancer.username}}</p></div>{% endif %}
+                    <div class="task_description"><p> <span>Содержание:</span> {{task.description|safe}} </p></div>
+                </div>
+            </div>
+        </div>
+
+{% endblock main_inner %}

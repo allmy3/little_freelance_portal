@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block intro_title %}
+{% if profile_user.my_profile.avatar %} <img src="{{profile_user.my_profile.avatar.url}}" width="40" height="40" style="border-radius: 10px;"> {% endif %}
+    {% if request.user != profile_user %}Профиль пользователя <span>@{{profile_user.username}}</span>{% else %}Ваш профиль{% endif %}
+    <span style="border-radius: 1000px; border: 3px solid rgb(255, 16, 16); padding: 5px">
+        
+        {% if profile_user.my_profile.free_lancer_status == True %}{% if profile_user.my_profile.elo == 0 %}0{% endif %}{% if profile_user.my_profile.elo >= 500 %}10 -{% endif %}{% if profile_user.my_profile.elo > 0 %} 5{% endif %}{% endif %}
+
+    </span>
+{% endblock intro_title %}
+
+{% block intro_subtitle %}Вся открытая информация профиля{% endblock intro_subtitle %}
+
+{% block btns %}
+
+<div class="profile_info">
+    <div class="profile_info__username"><p> <span>Хорошо выполненные заказы: </span> 100</p></div>
+    <div class="profile_info__username"><p> <span>Плохо выполненные заказы: </span> 2</p></div>
+    <div class="profile_info__email"><p> <span>Эл.Почта:</span> {{profile_user.email}}</p></div>
+    <div class="profile_info__starts"><p> <span>Рейтинг:</span> {{profile_freelancer_rate_avg.number_of_value__avg}} / 10</p></div>
+    {% if profile_user.my_profile.free_lancer_status == True %}<div class="profile_info__username"><p>ФРИЛАНСЕР {% if profile_user.my_profile.elo >= 500 %} | 10 уровень - Профи{% endif %}</p></div>{% endif %}
+</div>
+
+{% if profile_user != request.user %}
+<a href="#" class="btn top-three-three">Написать</a>
+{% if rate_status != True %}
+<a href="{% url 'give_rate' profile_user.username %}" class="btn top-three-three">Оставить отзыв</a>
+{% endif %}
+{% else %}
+<a href="{% url 'change_profile' %}" class="btn top-three-three">Поменять роль / изменение данных</a>
+<a href="{% url 'password_change' %}" class="btn top-three-three">Смена пароля</a>
+{% endif %}
+
+{% endblock btns %}
+
+{% block main_inner %}
+
+<div class="container">
+    <div class="main__inner">
+        <div class="main__suptitle">Отзывы к профилю</div>
+        <div class="main__title">
+            {% for rate_comment in profile_user.my_profile.rates.all %}
+            <span>@{{rate_comment.user.username}} • </span> {{rate_comment.description_for_rate_report}}; <br>
+            {% empty %}
+            <span>(site) FreeLance • </span> У этого пользователя нет отзывов или отзывов с комментариями; <br>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock main_inner %}

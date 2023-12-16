@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block intro_title %}Все отклики на ваши заказы{% endblock intro_title %}
+{% block intro_subtitle %}Тут вы можете выбрать исполнителя для заказа{% endblock intro_subtitle %}
+
+{% block btns %}
+    <a href="{% url 'index' %}" class="btn top-three-three">На главную</a>
+{% endblock btns %}
+
+{% block main_inner %}
+
+<div class="container">
+    <div class="main__inner">
+
+        {% for response in responses %}
+            <div class="task_list__card">
+                <div class="task_list__card_title"><a href="{% url 'profile' response.from_user.username %}">@{{response.from_user.username}}</a> на заказ "{{response.to_task.intro}}"</div>
+                <div class="task_list__card_description">{{response.text|safe}}</div>
+                <a href="{% url 'choice_freelancer' response.to_task.pk response.from_user.username %}" class="task_btn">Принять</a> |
+                <a class="task_btn">Игнорировать</a>
+            </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock main_inner %}
